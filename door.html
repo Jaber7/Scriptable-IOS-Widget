@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فتح الباب</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 60px; }
+    /* لون أخضر متوسط للزر */
+    button { padding: 16px 30px; font-size: 20px; background: #4CAF50; color: white; border: none; border-radius: 8px; cursor: pointer; transition: background 0.3s; }
+    button:hover { background: #45a049; }
+    #status { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h2>مرحبا 👋</h2>
+  <p>اضغط الزر لفتح الباب👇</p>
+  <button id="openBtn">فتح الباب</button>
+  <div id="status"></div>
+
+  <script>
+    // 🔴🔴🔴🔴🔴 التعديل هنا 🔴🔴🔴🔴🔴
+    // 1. ضع رابط الـ Webhook الحقيقي هنا (مثل رابط Node-RED المخفي)
+    //    هذا الرابط لن يظهر في شريط العنوان، وسيتم تنفيذه في الخلفية.
+    const WEBHOOK_URL = 'https://snpchat.online/api/webhook/open_lbb_socket_1'; 
+    // 2. إذا كنت تستخدم Node-RED، يجب أن يكون الرابط هو رابط Node-RED وليس Home Assistant مباشرة
+    
+    const btn = document.getElementById("openBtn");
+    const status = document.getElementById("status");
+
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      status.textContent = "جاري فتح الباب، انتظر لحظة...";
+      
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: "POST" // أو GET حسب إعدادات الـ Webhook/Node-RED
+        });
+        
+        if (response.ok) {
+          status.textContent = "✅ تم فتح الباب! (العملية مكتملة)";
+          btn.style.backgroundColor = '#999'; // تغيير لون الزر للإشارة إلى اكتمال المهمة
+        } else {
+          status.textContent = "❌ فشل الطلب، حاول مرة أخرى. (الرابط قد يكون غير صالح)";
+          btn.disabled = false;
+        }
+      } catch (error) {
+        status.textContent = "⚠️ حدث خطأ في الاتصال. تأكد من عمل الشبكة.";
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
