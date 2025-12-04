@@ -39,14 +39,14 @@
         
         if (response.ok) {
           status.textContent = "✅ تم فتح الباب! (العملية مكتملة)";
-          btn.style.backgroundColor = '#999'; // تغيير لون الزر للإشارة إلى اكتمال المهمة
+          //btn.style.backgroundColor = '#999'; // تغيير لون الزر للإشارة إلى اكتمال المهمة
         } else {
           status.textContent = "❌ فشل الطلب، حاول مرة أخرى. (الرابط قد يكون غير صالح)";
-          btn.disabled = false;
+          //btn.disabled = false;
         }
       } catch (error) {
         status.textContent = "⚠️ حدث خطأ في الاتصال. تأكد من عمل الشبكة.";
-        btn.disabled = false;
+        //btn.disabled = false;
       }
     });
   </script>
